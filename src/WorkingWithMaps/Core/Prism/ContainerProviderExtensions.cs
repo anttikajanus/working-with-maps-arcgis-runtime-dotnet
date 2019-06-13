@@ -33,7 +33,7 @@ namespace WorkingWithMaps.Example.Core.Prism
         /// </summary>
         /// <typeparam name="TWindow">The Type of the container class that will be used to host dialogs in the IDialogService</typeparam>
         /// <param name="containerRegistry"></param>
-        public static void RegisterDialogWindow<TWindow>(this IContainerRegistry containerRegistry) where TWindow : IDialogContainer
+        public static void RegisterDialogContainer<TWindow>(this IContainerRegistry containerRegistry) where TWindow : IDialogContainer
         {
             containerRegistry.Register(typeof(IDialogContainer), typeof(TWindow));
         }

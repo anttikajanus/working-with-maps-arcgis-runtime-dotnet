@@ -10,7 +10,7 @@ namespace WorkingWithMaps.Example
     {
         public MainWindowViewModel(IApplicationService applicationService) : base(applicationService)
         {
-            Title = "Naperville Water Utilities";
+            Title = "Kajanus.net : Working with web maps";
             RequiresLogin = true;
 
             ApplicationServices.EventAggregator.GetEvent<UserSessionCreatedEvent>().Subscribe(args => { RequiresLogin = false; });

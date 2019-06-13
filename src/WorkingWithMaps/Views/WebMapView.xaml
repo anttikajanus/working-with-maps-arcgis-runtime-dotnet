@@ -1,10 +1,12 @@
 ﻿<UserControl x:Class="WorkingWithMaps.Example.Views.WebMapView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:prism="http://prismlibrary.com/"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              TextElement.FontWeight="Regular"
              TextElement.FontSize="13"
@@ -16,6 +18,193 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" x:Name="root">
     <Grid>
-            
+        <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth3" materialDesign:ShadowAssist.ShadowEdges="All"
+                             HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Margin="12,10">
+            <Grid>
+                <esri:MapView x:Name="mapView" Map="{Binding Map}" IsTabStop="False"
+                              GeoViewTapped="MapView_GeoViewTapped">
+                </esri:MapView>
+
+                <!-- popup pane -->
+                <materialDesign:TransitioningContent 
+                        x:Name="popupPane" Visibility="Collapsed"
+                        Width="300" Margin="10,10,10,70" IsTabStop="False" HorizontalAlignment="Right" 
+                        OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromRight, Duration=0:0:0.2}">
+                    <GroupBox Header="Attributes" 
+                              x:Name="popupBox"
+                              Visibility="Collapsed"
+                              materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                          Style="{DynamicResource MaterialDesignCardGroupBox}">
+                        <GroupBox.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="CommentAlertOutline" Height="32" Width="32" VerticalAlignment="Center" />
+                                    <TextBlock Margin="8,0,0,0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Text="{Binding}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupBox.HeaderTemplate>
+                        <materialDesign:TransitioningContent 
+                             OpeningEffect="{materialDesign:TransitionEffect Kind=ExpandIn, Duration=0:0:0.2}">
+                            <esri:PopupViewer x:Name="popupViewer"
+                                  Padding="5"
+                                  Foreground="Black"
+                                  Visibility="Collapsed"
+                                  HorizontalAlignment="Stretch" 
+                                  VerticalAlignment="Stretch" />
+                        </materialDesign:TransitioningContent>
+                    </GroupBox>
+                </materialDesign:TransitioningContent>
+                
+                <!-- Tools -->
+                <Grid Margin="10,10,0,70">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <ListBox Style="{StaticResource MaterialDesignToolToggleListBox}" SelectedIndex="0" Margin="0,0,0,10"
+                             SelectionChanged="ListBox_SelectionChanged">
+                        <!--<ListBox.ToolTip>
+                            <StackPanel>
+                                <TextBlock Text="MaterialDesignToolToggleListBox" />
+                                <TextBlock Text="Exclusive selection" />
+                                <TextBlock Text="ListBoxAssist.IsToggle allows more natural toggle behaviour" />
+                            </StackPanel>
+                        </ListBox.ToolTip>-->
+                        <ListBoxItem ToolTipService.ToolTip="Table of contents" Tag="TOC">
+                            <materialDesign:PackIcon Kind="Buffer" />
+                        </ListBoxItem>
+                        <ListBoxItem ToolTipService.ToolTip="Edit" Tag="EDIT">
+                            <materialDesign:PackIcon Kind="Edit" />
+                        </ListBoxItem>
+                        <ListBoxItem ToolTipService.ToolTip="Choose basemap" Tag="ChooseBasemap"> 
+                            <materialDesign:PackIcon Kind="MapLegend" />
+                        </ListBoxItem>
+                        <ListBoxItem ToolTipService.ToolTip="Bookmarks" Tag="Bookmarks">
+                            <materialDesign:PackIcon Kind="Bookmark" />
+                        </ListBoxItem>
+                    </ListBox>
+
+                    <materialDesign:TransitioningContent 
+                        x:Name="toolPane" Visibility="Visible" Grid.Row="1"
+                        Width="300" IsTabStop="False" HorizontalAlignment="Left"
+                        OpeningEffect="{materialDesign:TransitionEffect Kind=FadeIn, Duration=0:0:0.2}">
+                        <Grid>
+                            <materialDesign:Card x:Name="bookmarkPane" Visibility="Collapsed">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="Bookmarks" Style="{StaticResource MaterialDesignSubheadingTextBlock}" 
+                                           FontWeight="Bold"
+                                           Margin="10,10,0,0"/>
+                                    <ListView ItemsSource="{Binding Map.Bookmarks}" Grid.Row="1" Margin="10" SelectionChanged="ListView_SelectionChanged">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Margin="10,0,0,0" Height="30" HorizontalAlignment="Stretch">
+                                                    <TextBlock Text="{Binding Name}" Width="250"  VerticalAlignment="Center"/>
+                                                    <Border BorderThickness="0,0,0,1" BorderBrush="Gray" VerticalAlignment="Bottom" Margin="0,0,0,-8"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </Grid>
+                            </materialDesign:Card>
+                            <materialDesign:Card x:Name="tocPane" Visibility="Collapsed">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid>
+                                        <TextBlock Text="Table of contents" Style="{StaticResource MaterialDesignSubheadingTextBlock}" 
+                                           FontWeight="Bold"
+                                                   VerticalAlignment="Center"
+                                            Margin="10"/>
+                                        <ToggleButton IsChecked="{Binding ElementName=toc, Path=ShowLegend, Mode=TwoWay}" HorizontalAlignment="Right" ToolTip="Show legend" Margin="5"/>
+                                    </Grid>
+                                    <esri:TableOfContents x:Name="toc" GeoView="{Binding ElementName=mapView}" ShowLegend="False" Grid.Row="1">
+                                        <esri:TableOfContents.LayerItemTemplate>
+                                            <HierarchicalDataTemplate ItemsSource="{Binding Sublayers}">
+                                                <Grid Margin="0,2">
+                                                    <Grid.Resources>
+                                                        <Style TargetType="MenuItem" x:Key="HideMenuItemWhenDisabled">
+                                                            <Style.Triggers>
+                                                                <Trigger Property="IsEnabled" Value="False">
+                                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Grid.Resources>
+                                                    <Grid.Style>
+                                                        <Style TargetType="Grid">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsInScaleRange, Mode=OneWay}" Value="false">
+                                                                    <Setter Property="Opacity" Value=".5" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Grid.Style>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition />
+                                                        <RowDefinition />
+                                                    </Grid.RowDefinitions>
+                                                    <esri:SymbolDisplay Symbol="{Binding Symbol, Mode=OneTime}" Margin="0,0,5,0" MaxHeight="40" MaxWidth="40">
+                                                        <esri:SymbolDisplay.Style>
+                                                            <Style TargetType="esri:SymbolDisplay">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Symbol, Mode=OneTime}" Value="{x:Null}">
+                                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </esri:SymbolDisplay.Style>
+                                                    </esri:SymbolDisplay>
+                                                    <CheckBox Grid.Column="1" IsChecked="{Binding LayerContent.IsVisible, Mode=TwoWay}" Margin="0,0,5,0">
+                                                        <CheckBox.Style>
+                                                            <Style TargetType="CheckBox" BasedOn="{StaticResource MaterialDesignCheckBox}">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding LayerContent.CanChangeVisibility, Mode=OneTime}" Value="False">
+                                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </CheckBox.Style>
+                                                    </CheckBox>
+
+                                                    <TextBlock Text="{Binding LayerContent.Name, Mode=OneWay}" Grid.Column="2" VerticalAlignment="Center">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding HasError}" Value="True">
+                                                                        <Setter Property="Foreground" Value="Red" />
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding IsActive}" Value="False">
+                                                                        <Setter Property="Opacity" Value=".5" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+
+                                                </Grid>
+                                            </HierarchicalDataTemplate>
+                                        </esri:TableOfContents.LayerItemTemplate>
+                                    </esri:TableOfContents>
+                                </Grid>
+                            </materialDesign:Card>
+                        </Grid>
+                    </materialDesign:TransitioningContent>
+                </Grid>
+                
+                <esri:Compass GeoView="{Binding ElementName=mapView, Mode=OneWay}"
+                               Margin="10, 25" AutoHide="False" IsTabStop="False" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+            </Grid>
+        </materialDesign:Card>
     </Grid>
 </UserControl>

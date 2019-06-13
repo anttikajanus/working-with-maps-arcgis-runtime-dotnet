@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Esri.ArcGISRuntime.Portal;
 using Prism.Commands;
-using Prism.Events;
 using Prism.Regions;
 using WorkingWithMaps.Example.Core;
-using WorkingWithMaps.Example.Core.Prism;
-using WorkingWithMaps.Example.Events;
 
 namespace WorkingWithMaps.Example.ViewModels
 {

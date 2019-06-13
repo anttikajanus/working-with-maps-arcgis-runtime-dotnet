@@ -21,16 +21,22 @@ namespace WorkingWithMaps.Example
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            // Services
             containerRegistry.RegisterSingleton<IDialogService, DialogService>();
             containerRegistry.RegisterSingleton<IConfigurationService, ConfigurationService>();
             containerRegistry.RegisterSingleton<INavigationService, NavigationService>();
             containerRegistry.RegisterSingleton<IApplicationService, ApplicationService>();
+
+            // Views
             containerRegistry.RegisterForNavigation<LoginView>();
             containerRegistry.RegisterForNavigation<WebMapsView>();
+            containerRegistry.RegisterForNavigation<WebMapView>();
             containerRegistry.RegisterForNavigation<GroupSelectionView>();
 
-            containerRegistry.RegisterDialogWindow<DialogContainer>();
-            containerRegistry.RegisterDialog<PortalGroupDetailsDialogView>("PortalGroupDetailsDialog");
+
+            // Dialogs
+            containerRegistry.RegisterDialogContainer<DialogContainer>();
+            containerRegistry.RegisterDialog<WebMapDetailsDialogView>("WebMapDetailsDialog");
         }
 
         protected override void ConfigureServiceLocator()

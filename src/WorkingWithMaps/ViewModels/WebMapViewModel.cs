@@ -12,9 +12,8 @@ namespace WorkingWithMaps.Example.ViewModels
 {
     public class WebMapViewModel : NavigationViewModel
     {
-        public WebMapViewModel(IApplicationService eventAggregator) : base(eventAggregator)
+        public WebMapViewModel(IApplicationService applicationServices) : base(applicationServices)
         {
-          
         }
 
         private Map _map = new Map();
@@ -26,22 +25,17 @@ namespace WorkingWithMaps.Example.ViewModels
 
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
-            base.OnNavigatedTo(navigationContext);
-        }
-
-        private async Task LoadItemsAsync(ArcGISPortal portal, string webmapId)
-        {
             try
             {
-                var webmapItem = await PortalItem.CreateAsync(portal, webmapId);
+                var webmapItem = navigationContext.Parameters["webmap"] as PortalItem;
                 Map = new Map(webmapItem);
+                base.OnNavigatedTo(navigationContext);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;
             }
-
         }
     }
 }
