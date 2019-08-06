@@ -6,7 +6,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              TextElement.FontWeight="Regular"
              TextElement.FontSize="13"
@@ -98,7 +97,7 @@
                                     <TextBlock Text="Bookmarks" Style="{StaticResource MaterialDesignSubheadingTextBlock}" 
                                            FontWeight="Bold"
                                            Margin="10,10,0,0"/>
-                                    <ListView ItemsSource="{Binding Map.Bookmarks}" Grid.Row="1" Margin="10" SelectionChanged="ListView_SelectionChanged">
+                                    <ListView ItemsSource="{Binding Bookmarks}" Grid.Row="1" Margin="10" SelectionChanged="ListView_SelectionChanged">
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
                                                 <Grid Margin="10,0,0,0" Height="30" HorizontalAlignment="Stretch">
@@ -137,7 +136,7 @@
                                                         </Style>
                                                     </Grid.Resources>
                                                     <Grid.Style>
-                                                        <Style TargetType="Grid">
+                                                        <Style TargetType="Grid">   
                                                             <Style.Triggers>
                                                                 <DataTrigger Binding="{Binding IsInScaleRange, Mode=OneWay}" Value="false">
                                                                     <Setter Property="Opacity" Value=".5" />

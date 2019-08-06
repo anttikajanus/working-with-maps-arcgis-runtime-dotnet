@@ -1,14 +1,10 @@
 ﻿using Esri.ArcGISRuntime.Portal;
-using Esri.ArcGISRuntime.Tasks.Offline;
 using Prism.Commands;
-using Prism.Events;
 using Prism.Regions;
+using Prism.Services.Dialogs;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using WorkingWithMaps.Example.Core;
-using WorkingWithMaps.Example.Core.Prism;
-using WorkingWithMaps.Example.Events;
 using WorkingWithMaps.Example.Models;
 
 namespace WorkingWithMaps.Example.ViewModels
@@ -40,14 +36,14 @@ namespace WorkingWithMaps.Example.ViewModels
             set { SetProperty(ref _webMapModels, value); }
         }
 
-        private async void NavigateToDetails(WebMapModel model)
+        private void NavigateToDetails(WebMapModel model)
         {
             var parameters = new DialogParameters
                 {
                     { "model", model}
                 };
 
-            var dialogResult = await ApplicationServices.DialogService.ShowAsync("WebMapDetailsDialog", parameters, null);
+            ApplicationServices.DialogService.ShowDialog("WebMapDetailsDialog", parameters, null);
         }
 
         private void NavigateToOnlineMap(WebMapModel model)
@@ -60,16 +56,15 @@ namespace WorkingWithMaps.Example.ViewModels
             ApplicationServices.NavigationService.RequestNavigation("WebMapView", parameters);
         }
 
-        private async void NavigateToOfflineSelection(WebMapModel model)
+        private void NavigateToOfflineSelection(WebMapModel model)
         {
             var parameters = new DialogParameters
                 {
                     { "model", model}
                 };
 
-            var dialogResult = await ApplicationServices.DialogService.ShowAsync("WebMapDetailsDialog", parameters, null);
+           ApplicationServices.DialogService.ShowDialog("WebMapDetailsDialog", parameters, null);
         }
-
 
         public async override void OnNavigatedTo(NavigationContext navigationContext)
         {

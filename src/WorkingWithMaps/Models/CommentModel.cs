@@ -4,6 +4,9 @@ using System;
 
 namespace WorkingWithMaps.Example.Models
 {
+    /// <summary>
+    /// Model for comments which represents a comment for a portal item.
+    /// </summary>
     public class CommentModel : BindableBase
     {
         private readonly PortalItemComment _comment;

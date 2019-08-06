@@ -1,7 +1,7 @@
 ﻿using Esri.ArcGISRuntime.Portal;
+using Prism.Services.Dialogs;
 using System.Collections.ObjectModel;
 using WorkingWithMaps.Example.Core;
-using WorkingWithMaps.Example.Core.Prism;
 using WorkingWithMaps.Example.Models;
 
 namespace WorkingWithMaps.Example.ViewModels.Dialogs

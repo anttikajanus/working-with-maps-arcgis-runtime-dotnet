@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Esri.ArcGISRuntime.Portal;
-using Prism.Events;
 using WorkingWithMaps.Example.Core;
 using WorkingWithMaps.Example.Events;
 
