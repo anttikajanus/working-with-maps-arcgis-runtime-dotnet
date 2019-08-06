@@ -1,28 +1,16 @@
 ﻿using Esri.ArcGISRuntime.Data;
-using Esri.ArcGISRuntime.Mapping;
 using Esri.ArcGISRuntime.Mapping.Popups;
 using Esri.ArcGISRuntime.UI;
 using Esri.ArcGISRuntime.UI.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using WorkingWithMaps.Example.Models;
 
 namespace WorkingWithMaps.Example.Views
 {
-    /// <summary>
-    /// Interaction logic for WebMapView.xaml
-    /// </summary>
     public partial class WebMapView : UserControl
     {
         public WebMapView()
@@ -175,7 +163,7 @@ namespace WorkingWithMaps.Example.Views
         {
             if (e.AddedItems.Count > 0)
             {
-                var bookmark = e.AddedItems[0] as Bookmark;
+                var bookmark = e.AddedItems[0] as BookmarkModel;
                 await mapView.SetViewpointAsync(bookmark.Viewpoint);
             }
         }

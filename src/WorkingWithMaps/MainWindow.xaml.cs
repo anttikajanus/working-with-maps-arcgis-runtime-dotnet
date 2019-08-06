@@ -10,7 +10,5 @@ namespace WorkingWithMaps.Example
         {
             InitializeComponent();
         }
-
-      
     }
 }

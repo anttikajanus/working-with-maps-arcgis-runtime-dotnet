@@ -52,31 +52,34 @@
     <Reference Include="Esri.ArcGISRuntime.Toolkit.Preview, Version=100.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Esri.ArcGISRuntime.Toolkit.Preview.100.4.0\lib\net461\Esri.ArcGISRuntime.Toolkit.Preview.dll</HintPath>
     </Reference>
-    <Reference Include="MaterialDesignColors, Version=1.1.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MaterialDesignColors.1.1.3\lib\net45\MaterialDesignColors.dll</HintPath>
+    <Reference Include="MaterialDesignColors, Version=1.2.0.325, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.1.2.0\lib\net45\MaterialDesignColors.dll</HintPath>
     </Reference>
-    <Reference Include="MaterialDesignThemes.Wpf, Version=2.5.1.1345, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MaterialDesignThemes.2.5.1\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=2.6.0.325, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.2.6.0\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
     </Reference>
-    <Reference Include="Prism, Version=7.1.0.431, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
-      <HintPath>..\packages\Prism.Core.7.1.0.431\lib\net45\Prism.dll</HintPath>
+    <Reference Include="Prism, Version=7.2.0.1367, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Core.7.2.0.1367\lib\net45\Prism.dll</HintPath>
     </Reference>
-    <Reference Include="Prism.Ninject.Wpf, Version=7.1.0.431, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
-      <HintPath>..\packages\Prism.Ninject.7.1.0.431\lib\net45\Prism.Ninject.Wpf.dll</HintPath>
+    <Reference Include="Prism.Ninject.Wpf, Version=7.2.0.1367, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Ninject.7.2.0.1367\lib\net45\Prism.Ninject.Wpf.dll</HintPath>
     </Reference>
-    <Reference Include="Prism.Wpf, Version=7.1.0.431, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
-      <HintPath>..\packages\Prism.Wpf.7.1.0.431\lib\net45\Prism.Wpf.dll</HintPath>
+    <Reference Include="Prism.Wpf, Version=7.2.0.1367, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Wpf.7.2.0.1367\lib\net45\Prism.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Prism.Wpf.7.1.0.431\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>..\packages\Prism.Wpf.7.2.0.1367\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -104,22 +107,13 @@
     <Compile Include="Core\ConfigurationService.cs" />
     <Compile Include="Core\IApplicationServices.cs" />
     <Compile Include="Core\IConfigurationService.cs" />
-    <Compile Include="Core\IDialogService.cs" />
-    <Compile Include="Core\Prism\ContainerProviderExtensions.cs" />
     <Compile Include="Core\DialogViewModel.cs" />
-    <Compile Include="Core\Prism\DialogContainer.xaml.cs">
-      <DependentUpon>DialogContainer.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Core\Prism\DialogResult.cs" />
-    <Compile Include="Core\Prism\DialogWindowExtensions.cs" />
-    <Compile Include="Core\Prism\IDialogAware.cs" />
-    <Compile Include="Core\Prism\IDialogParameters.cs" />
-    <Compile Include="Core\Prism\IDialogResult.cs" />
-    <Compile Include="Core\Prism\IDialogContainer.cs" />
+    <Compile Include="Core\NavigationViewModel.cs" />
     <Compile Include="Events\UserSessionEndedEvent.cs" />
     <Compile Include="Events\UserSessionCreatedEvent.cs" />
     <Compile Include="Events\UserSessionCreatedMessage.cs" />
     <Compile Include="Events\UserSessionEndedMessage.cs" />
+    <Compile Include="Models\BookmarkModel.cs" />
     <Compile Include="Models\CommentModel.cs" />
     <Compile Include="Models\WebMapModel.cs" />
     <Compile Include="ViewModels\Dialogs\WebMapDetailsDialogViewModel.cs" />
@@ -151,10 +145,6 @@
     <Compile Include="Views\WorkflowSelectionView.xaml.cs">
       <DependentUpon>WorkflowSelectionView.xaml</DependentUpon>
     </Compile>
-    <Page Include="Core\Prism\DialogContainer.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

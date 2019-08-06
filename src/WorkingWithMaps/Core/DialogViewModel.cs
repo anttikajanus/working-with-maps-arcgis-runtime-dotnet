@@ -1,11 +1,6 @@
 ﻿using Prism.Commands;
-using Prism.Regions;
+using Prism.Services.Dialogs;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WorkingWithMaps.Example.Core.Prism;
 
 namespace WorkingWithMaps.Example.Core
 {
@@ -28,12 +23,12 @@ namespace WorkingWithMaps.Example.Core
 
         protected virtual void CloseDialog(string parameter)
         {
-            bool? result = null;
+            var result = ButtonResult.None;
 
             if (parameter?.ToLower() == "true")
-                result = true;
+                result = ButtonResult.OK;
             else if (parameter?.ToLower() == "false")
-                result = false;
+                result = ButtonResult.Cancel;
 
             RaiseRequestClose(new DialogResult(result));
         }
@@ -55,26 +50,6 @@ namespace WorkingWithMaps.Example.Core
         }
 
         public virtual void OnDialogOpened(IDialogParameters parameters)
-        {
-        }
-    }
-
-    public class NavigationViewModel : BaseViewModel, INavigationAware
-    {
-        public NavigationViewModel(IApplicationService applicationService) : base(applicationService)
-        {
-        }
-
-        public virtual bool IsNavigationTarget(NavigationContext navigationContext)
-        {
-            return true;
-        }
-
-        public virtual void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-        }
-
-        public virtual void OnNavigatedTo(NavigationContext navigationContext)
         {
         }
     }

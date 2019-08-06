@@ -1,7 +1,6 @@
 ﻿using Prism.Ioc;
 using System.Windows;
 using WorkingWithMaps.Example.Core;
-using WorkingWithMaps.Example.Core.Prism;
 using WorkingWithMaps.Example.Views;
 using WorkingWithMaps.Example.Views.Dialogs;
 
@@ -22,7 +21,6 @@ namespace WorkingWithMaps.Example
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             // Services
-            containerRegistry.RegisterSingleton<IDialogService, DialogService>();
             containerRegistry.RegisterSingleton<IConfigurationService, ConfigurationService>();
             containerRegistry.RegisterSingleton<INavigationService, NavigationService>();
             containerRegistry.RegisterSingleton<IApplicationService, ApplicationService>();
@@ -35,7 +33,6 @@ namespace WorkingWithMaps.Example
 
 
             // Dialogs
-            containerRegistry.RegisterDialogContainer<DialogContainer>();
             containerRegistry.RegisterDialog<WebMapDetailsDialogView>("WebMapDetailsDialog");
         }
 
